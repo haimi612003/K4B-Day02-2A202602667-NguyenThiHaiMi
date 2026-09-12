@@ -13,7 +13,7 @@
 | 5   | Nguyễn Thị Hải Mi | 2A202602667 | Lên ý tưởng; phân chia công việc; làm báo cáo (report) |
 
 **Candidate problem nhóm chọn (1 câu):**
-Problem 1 — Gom context trước khi review PR: reviewer phải tìm và đọc ticket, code liên quan và lịch sử thay đổi ở nhiều nơi trước khi hiểu đủ bối cảnh để đánh giá rủi ro của PR.
+Gom và tổng hợp context (ticket, code liên quan, lịch sử thay đổi) khi review PR để nhận ra rủi ro kỹ thuật.
 
 
 ---
@@ -47,7 +47,7 @@ Problem 1 — Gom context trước khi review PR: reviewer phải tìm và đọ
 | A | Candidate 1, 4, 5, 6 | Kỹ thuật phần mềm: gom context, đánh giá lỗi & rủi ro code | Reviewer/dev phải tự gom thông tin rải rác (ticket, log, advisory, lịch sử code) trước khi đánh giá; thời gian đo được bằng phút |
 | B | Candidate 2, 3, 7, 8, 9 | Học tập & làm việc nhóm đồ án: tra cứu tài liệu, làm rõ task | Sinh viên mất thời gian lọc tài liệu và tìm lại/làm rõ task, deadline; nhiều bài phụ thuộc thói quen, quy trình nhóm |
 | C | Candidate 10, 11, 12 | CSKH: trả lời tin nhắn & câu hỏi lặp lại của khách hàng | Câu hỏi lặp lại, tra cứu thủ công, phản hồi chậm ngoài giờ; đo được số câu hỏi và thời gian phản hồi |
-| D (nếu có) | Candidate 13, 14, 15 | Vận hành SEO/Content: lọc, kiểm tra, liên kết theo tiêu chí | Việc lặp lại theo tiêu chí/guideline có sẵn; phần lớn giải được bằng Rule, AI chỉ ở bước cần hiểu ngữ cảnh |
+| D | Candidate 13, 14, 15 | Vận hành SEO/Content: lọc, kiểm tra, liên kết theo tiêu chí | Việc lặp lại theo tiêu chí/guideline có sẵn; phần lớn giải được bằng Rule, AI chỉ ở bước cần hiểu ngữ cảnh |
 
 ### 3.3. Shortlist (giữ 2-3 bài trả lời được 7 câu hỏi worksheet)
 
@@ -111,21 +111,24 @@ Không có bất đồng lớn. Nhóm thống nhất chọn Review PR dựa trê
 
 | Nguồn | Số người / mẫu | Tín hiệu xác nhận (kèm quote nguyên văn) | Tín hiệu phản bác | Nhóm sửa problem thế nào |
 |---|---:|---|---|---|
-| Interview | Kế hoạch: 2-3 reviewer + tác giả của cùng 3-5 PR gần đây có trao đổi bổ sung context. **Chưa thực hiện** | Chưa có — cần quote thật. Câu hỏi dự kiến: "Ở PR này bạn thiếu thông tin gì?", "Bạn tìm nó ở đâu?", "Thông tin nào nếu có sẵn sẽ giúp review nhanh hơn?" | Chưa có | — |
+| Interview | Kế hoạch: 2-3 reviewer + tác giả của cùng 3-5 PR gần đây có trao đổi bổ sung context. **Chưa thực hiện** | Chưa có (chưa phỏng vấn). Câu hỏi dự kiến: "Ở PR này bạn thiếu thông tin gì?", "Bạn tìm nó ở đâu?", "Thông tin nào nếu có sẵn sẽ giúp review nhanh hơn?" | Chưa có | — |
 | Survey / poll | Không thực hiện | — | — | Nhóm ưu tiên quan sát thực tế và PR thật thay vì survey, vì lời kể dễ lệch so với thời gian thực. |
 | Log / ticket / review (nếu có) | Kế hoạch: quan sát trực tiếp 2-3 phiên review, bấm giờ từng bước; đọc comment hỏi bổ sung context trong PR. **Chưa thực hiện** | Chưa có | Lưu ý từ khâu thiết kế đo: thời gian từ mở PR đến approve còn gồm thời gian chờ và sửa code, nên không dùng riêng để kết luận thời gian gom context | Nhóm bỏ mốc giả định 75 phút/PR (cho toàn bộ việc review) và tách riêng metric "thời gian reviewer gom và hiểu context" |
+| Nghiên cứu đã công bố (bằng chứng thứ cấp) | 1 nghiên cứu: Bacchelli & Bird, *Expectations, Outcomes, and Challenges of Modern Code Review*, ICSE 2013, Microsoft Research — [link](https://www.microsoft.com/en-us/research/publication/expectations-outcomes-and-challenges-of-modern-code-review/) | Nhóm tác giả quan sát, phỏng vấn, khảo sát developer/manager và phân loại thủ công hàng trăm comment review ở nhiều team tại Microsoft. Kết luận: *"code and change understanding is the key aspect of code reviewing and that developers employ a wide range of mechanisms to meet their understanding needs"*, và các nhu cầu hiểu này phần lớn chưa được công cụ hiện có đáp ứng | Nghiên cứu năm 2013, tại một công ty lớn; chưa đo riêng thời gian gom context, và chưa chắc đúng với team nhỏ hoặc repo của nhóm | Xác nhận bottleneck nằm ở bước **hiểu thay đổi / hiểu context**, không phải đọc diff → giữ trọng tâm vào bước gom và hiểu context; thời gian thực tế vẫn cần đo trên PR của team |
 
 **Insight sau validation (1-2 câu — pain thật nằm ở đâu):**
 
 ```text
-Chưa có validation thực tế, nên pain vẫn là giả thuyết. Giả thuyết hiện tại:
+Nghiên cứu của Microsoft (Bacchelli & Bird, 2013) xác nhận hướng của problem: hiểu
+thay đổi / hiểu context là khía cạnh then chốt của code review và công cụ hiện có chưa
+đáp ứng tốt nhu cầu này. Tuy vậy nhóm chưa phỏng vấn hay đo trên PR của chính team, nên
+mức độ (bao nhiêu phút, bao nhiêu lượt hỏi) vẫn chưa được kiểm chứng. Giả thuyết hiện tại:
 reviewer mất công chủ yếu ở phần context "vì sao" (mục đích, ràng buộc, lý do
 thiết kế nằm ở ticket, PR/commit cũ và thread trao đổi), không phải ở việc đọc diff.
-Nhóm chưa tìm được nguồn kiểm chứng cho con số "OSS maintainer mất 4-10 giờ/tuần
-cho review PR" nên không dùng con số này làm bằng chứng.
+Từ giả thuyết này, nhóm thu hẹp problem vào PR chạm module lạ hoặc có context nằm ở
+nhiều nguồn (không phải mọi PR), và tập trung vào gom – nối – tóm tắt context trước khi
+reviewer đánh giá code, thay vì xây dựng một AI tự review code.
 ```
-
-Bằng chứng đính kèm (nếu có): chưa có — sẽ bổ sung `02-group-problem-statement-interview-notes.md` sau khi phỏng vấn/quan sát.
 
 ### 4.2. Research giải pháp đã có (ít nhất 2-3 tools/patterns + 1-2 link kiểm được)
 
@@ -134,16 +137,22 @@ Bằng chứng đính kèm (nếu có): chưa có — sẽ bổ sung `02-group-p
 | CodeRabbit — linked issue validation | [docs.coderabbit.ai/issues/pr-validation](https://docs.coderabbit.ai/issues/pr-validation) | Đọc issue được link (GitHub, GitLab, Jira, Linear, Azure DevOps) và đánh giá PR có đáp ứng yêu cầu không (Addressed / Not Addressed / Unclear); comment trực tiếp trên PR | Nối ticket với diff tự động, không cần reviewer tự mở ticket | Output là nhận xét về code / mức đáp ứng yêu cầu, không phải bản tóm tắt context để reviewer đọc trước; theo tài liệu chỉ dùng tiêu đề + mô tả issue, không đọc comment/thread thảo luận — nơi thường chứa lý do thiết kế | Link ticket là input nên bắt buộc (Rule); phần "vì sao" nằm trong thread thì cần nguồn khác ngoài ticket |
 | Codex code review (OpenAI) | [developers.openai.com/codex/integrations/github](https://developers.openai.com/codex/integrations/github) | Review diff PR theo hướng dẫn trong `AGENTS.md`, chỉ flag lỗi P0/P1; gọi bằng `@codex review` hoặc bật tự động | Tập trung lỗi nghiêm trọng nên ít nhiễu; guideline nằm trong repo | Trả lời "code có lỗi không", không trả lời "vì sao chọn cách sửa này" | Giới hạn output để giảm nhiễu; lưu guideline trong repo là cách cấp context ổn định cho AI |
 | PR-Agent (Qodo Merge bản open source) | [docs.pr-agent.ai](https://docs.pr-agent.ai/) | `/describe` tự sinh mô tả PR (tiêu đề, loại, tóm tắt, walkthrough); `/review`, `/improve`, `/ask`; có khả năng lấy ticket context | Gần nhất với ý tưởng của nhóm: có tóm tắt + walkthrough trước khi mở file; open source, tự host được | Theo tìm hiểu của nhóm, tóm tắt dựng chủ yếu từ diff + ticket; chưa thấy dẫn nguồn tới PR/commit cũ, thread quyết định, và đánh dấu phần tác giả chưa ghi lại (cần thử để xác nhận) | Nếu pilot, nên thử dựa trên `/describe` thay vì tự build từ đầu |
+| GitHub Copilot — PR summary | [docs.github.com/.../create-a-pr-summary](https://docs.github.com/en/copilot/how-tos/copilot-on-github/copilot-for-github-tasks/create-a-pr-summary) | Tóm tắt thay đổi của PR vào phần mô tả hoặc comment để reviewer nhanh chóng hiểu PR thay đổi gì | Giảm thời gian đọc ban đầu; summary được tạo trực tiếp trong PR | GitHub khuyến nghị review kỹ bản tóm tắt và tự bổ sung context; Copilot không dùng nội dung mô tả PR đã có | Có thể dùng AI để tóm tắt context, nhưng không coi output là nguồn sự thật cuối cùng |
+| GitHub Copilot — Explore pull requests | [docs.github.com/.../explore-pull-requests](https://docs.github.com/en/copilot/tutorials/explore-pull-requests) | Hỏi Copilot Chat về PR: commits, thay đổi theo file/dòng, comment và review đã có | Hỏi trực tiếp trên PR, dùng chính context của PR để giải thích thay đổi | Chủ yếu làm việc với context đã nằm trong PR/repository; vẫn cần reviewer kiểm chứng | Học cách cho AI kết nối nhiều nguồn context và giải thích lại cho reviewer |
+| GitHub — Pull request template | [docs.github.com/.../creating-a-pull-request-template](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/creating-a-pull-request-template-for-your-repository) | Tự điền sẵn khung mô tả khi tạo PR để tác giả cung cấp related issue, mục đích, ghi chú test | Giảm context bị thiếu ngay từ đầu; đơn giản, dễ triển khai | Phụ thuộc vào việc tác giả điền đầy đủ và chính xác | Trước khi dùng AI, cần chuẩn hóa input bằng PR template (Rule) |
 | Graphite — AI code review false positives | [graphite.com/guides/ai-code-review-false-positives](https://graphite.com/guides/ai-code-review-false-positives) | Bài hướng dẫn về tỷ lệ false positive của AI code review | Đưa ra mức tham chiếu: "5–15%" false positive với các tool AI review hiện nay | Nguồn từ nhà cung cấp tool (có thể thiên vị); đo trên review diff, không đo tóm tắt context | Thêm AI mà không đo chất lượng có thể làm reviewer mất thêm thời gian kiểm tra → phải đo "thông tin sai" trong pilot |
 
 **Research takeaway (2-3 câu — nên build gì / không build gì):**
 
 ```text
 Thị trường đã có nhiều tool AI review diff (CodeRabbit, Codex, PR-Agent) và đã nối
-được ticket với code, nên nhóm không build thêm một AI review diff. Khoảng trống còn
-lại là bản tóm tắt context "vì sao" có dẫn nguồn (ticket + PR/commit cũ + thread quyết
-định) và đánh dấu phần tác giả chưa ghi lại. Nếu làm, nên thử PR template trước, sau
-đó thêm lớp tóm tắt dựa trên tool có sẵn (vd PR-Agent /describe) và đo trên mẫu nhỏ.
+được ticket với code; GitHub Copilot PR summary / Explore PR cũng đã giúp reviewer hiểu
+nhanh nội dung thay đổi, còn PR template giúp giảm context thiếu ngay từ lúc tạo PR.
+Vì vậy nhóm không build AI tự review code hoặc tự approve PR. Khoảng trống còn lại là
+bản tóm tắt context "vì sao" có dẫn nguồn (ticket + PR/commit cũ + thread quyết định)
+và đánh dấu phần tác giả chưa ghi lại. Hướng build: PR template chuẩn hóa input → AI
+gom và tóm tắt context, dẫn nguồn, chỉ ra phần thiếu → reviewer kiểm chứng và quyết
+định; thử PR template trước, dựa trên tool có sẵn và đo trên mẫu nhỏ.
 ```
 
 > Lưu ý: không dùng số liệu AI đưa nếu không verify được link chính thức. Ghi rõ giả định chưa chắc.
@@ -154,7 +163,7 @@ lại là bản tóm tắt context "vì sao" có dẫn nguồn (ticket + PR/comm
 
 ### 5.1. Current workflow bản nhóm
 
-Dán workflow hoặc link file: `02-group-problem-statement-workflow.png/pdf/md`
+Workflow vẽ dạng ASCII bên dưới.
 
 ```text
   [1. Đọc PR: Reviewer]
@@ -250,23 +259,22 @@ Nếu tác giả chưa ghi lại lý do thiết kế, AI không tự đoán mà 
 
 ### 6.0. Ma trận độ phù hợp (suy nghĩ nhanh, không thay quyết định cuối)
 
-- Độ mơ hồ: [ ] Thấp (có đúng/sai rõ) / [x] Cao (nhiều cách trả lời vẫn OK) — Vì sao: một bản tóm tắt context có nhiều cách viết vẫn chấp nhận được; "lý do thiết kế" và "phạm vi ảnh hưởng" không có một đáp án đúng duy nhất.
-- Độ phức tạp: [ ] Thấp (1-2 bước) / [x] Cao (3+ bước/nguồn, phụ thuộc nhau) — Vì sao: phải nối 3+ nguồn (ticket, diff, code liên quan, PR/commit cũ, thread trao đổi) và bước review phụ thuộc vào context gom được trước đó.
+- Độ mơ hồ: [x] Thấp (có đúng/sai rõ) / [ ] Cao (nhiều cách trả lời vẫn OK) — Vì sao: mục tiêu xử lý đã rõ — bản tóm tắt phải trả lời đúng 5 câu hỏi cố định và mỗi ý phải khớp với nguồn; phần không có nguồn thì đánh dấu thiếu, không để AI tự diễn giải.
+- Độ phức tạp: [ ] Thấp (1-2 bước) / [x] Cao (3+ bước/nguồn, phụ thuộc nhau) — Vì sao: reviewer phải thu thập và nối context từ 3+ nguồn (ticket, diff, code liên quan, PR/commit cũ, thread trao đổi) và bước review phụ thuộc vào context gom được trước đó.
 
 **Bài toán nhóm nằm ở ô nào:**
 
 ```text
-Độ phức tạp cao × Độ mơ hồ cao — ô mà theo ma trận "Agent có thể phù hợp, nhưng cần
-boundary, người thật kiểm tra và phương án quay về rất rõ".
+Bài toán nằm ở ô độ mơ hồ thấp và độ phức tạp cao — theo ma trận: "Workflow điều phối
+nhiều bước rõ ràng, chưa chắc cần Agent".
 ```
 
 **Vì sao (2-3 câu):**
 
 ```text
-Dù rơi vào ô cao/cao, nhóm không chọn Agent: nếu tác giả gắn sẵn link nguồn qua PR
-template, AI không cần tự quyết định tìm ở đâu, và các bước đi thẳng một đường cố định.
-Phần mơ hồ (lý do thiết kế) được xử lý bằng cách đánh dấu phần thiếu và để người
-(tác giả, reviewer) chốt, không để AI tự đoán.
+Bài toán nằm ở ô độ mơ hồ thấp và độ phức tạp cao vì mục tiêu xử lý đã khá rõ nhưng
+reviewer phải thu thập và kết nối context từ nhiều nguồn. Các bước chính có thể xác
+định trước, nhưng cần AI hỗ trợ đọc, tổng hợp và chỉ ra phần context còn thiếu.
 ```
 
 ### 6.1. So sánh Rule / Workflow / Agent (so trên cùng 1 bài)
@@ -342,8 +350,9 @@ Not Yet
 **Lý do (3-4 câu dựa trên bằng chứng):**
 
 ```text
-Workflow và boundary đã rõ, research cho thấy có khoảng trống thật (các tool hiện có
-review diff, chưa tóm tắt context "vì sao" có dẫn nguồn). Nhưng pain mới dựa trên ghi
+Workflow và boundary đã rõ, research cho thấy PR template và GitHub Copilot đã hỗ trợ
+từng phần của bài toán, nhưng vẫn còn khoảng trống thật (các tool hiện có review diff
+hoặc tóm tắt thay đổi, chưa tóm tắt context "vì sao" có dẫn nguồn). Nhưng pain mới dựa trên ghi
 nhận cá nhân, baseline đều là giả định và nhóm chưa phỏng vấn hay quan sát phiên review
 nào. Phương án non-AI (PR template) cũng chưa được thử, nên chưa thể chứng minh cần AI.
 ```
@@ -391,7 +400,7 @@ tóm tắt, hoặc số lượt hỏi bổ sung không giảm so với nhóm PR 
 
 ### Self-check nộp phần 02 (nhóm)
 - [x] Có nhật ký hội tụ 9-12 → 1 (cluster + shortlist + score)
-- [ ] Có validation (quote thật) + research (link kiểm được) — research đã có link; validation mới có kế hoạch, chưa có quote thật
+- [ ] Có validation (quote thật) + research (link kiểm được) — research đã có link; validation có bằng chứng thứ cấp từ nghiên cứu đã công bố, phỏng vấn/quan sát trên PR của team chưa thực hiện
 - [ ] Có workflow trước/sau đủ thời gian, handoff, bottleneck, boundary, fallback — đã có handoff, bottleneck, boundary, fallback; thời gian từng bước chưa đo
 - [x] Có PS v0 → v1, metric có trước/sau + cách đo, boundary có làm/không làm
 - [x] Có so sánh Rule/Workflow/Agent + Decision Go/Not Yet/No-Go có lý do

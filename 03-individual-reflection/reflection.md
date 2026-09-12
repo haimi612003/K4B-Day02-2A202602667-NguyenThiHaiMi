@@ -7,7 +7,7 @@
 - Họ và tên: Nguyễn Thị Hải Mi
 - Mã học viên: 2A202602667
 - Nhóm: Nguyễn Đức Đồng, Mai Huy Hoàng, Trần Nguyễn Trí Dũng, Nguyễn Thùy Linh, Nguyễn Thị Hải Mi
-- Candidate problem nhóm chọn: Gom context trước khi review PR — reviewer phải tìm và đọc ticket, code liên quan và lịch sử thay đổi ở nhiều nơi trước khi hiểu đủ bối cảnh để đánh giá rủi ro của PR.
+- Candidate problem nhóm chọn: Gom và tổng hợp context (ticket, code liên quan, lịch sử thay đổi) khi review PR để nhận ra rủi ro kỹ thuật.
 
 ---
 
@@ -20,7 +20,7 @@
 | Challenge bài của bạn khác | Khi tổng hợp báo cáo, chỉ ra bài nhóm chọn (Review PR) chưa có trong bảng 3.1 và cluster cũ không khớp số thứ tự candidate | Nhóm bổ sung bảng 3.1 lên 15 candidate (đủ 3 bài/người), bài được chọn có nguồn gốc rõ trong nhật ký hội tụ |
 | Gom trùng / cluster | Gom lại 15 candidate thành 4 cluster theo người gặp vấn đề: kỹ thuật phần mềm, học tập/đồ án, CSKH, vận hành SEO/Content | Nhật ký hội tụ liền mạch: 15 candidate → 4 cluster → shortlist → score → 1 bài |
 | Chọn candidate problem | Tham gia chấm điểm; chấp nhận để nhóm chọn Review PR thay vì bài GP/PR của mình | Nhóm chọn bài có tổng điểm cao nhất ở bảng 3.4; điểm "pain có evidence" và "impact đo được" được hạ xuống 3 vì chưa có số đo |
-| Validation / research | Kiểm tra nguồn cho các con số trên slide nhóm; tìm tài liệu chính thức của CodeRabbit, Codex, PR-Agent, Graphite | Phát hiện con số "4-10 giờ/tuần" chưa có nguồn và "false positive 15-25%" không khớp nguồn (5-15%) → không dùng làm bằng chứng |
+| Validation / research | Kiểm tra nguồn cho các con số trên slide nhóm; tìm tài liệu chính thức của CodeRabbit, Codex, PR-Agent, Graphite; bổ sung nghiên cứu của Microsoft (Bacchelli & Bird, 2013) làm bằng chứng thứ cấp; gộp thêm 3 nguồn GitHub (Copilot PR summary, Explore PR, PR template) do nhóm tìm | Phát hiện con số "4-10 giờ/tuần" chưa có nguồn và "false positive 15-25%" không khớp nguồn (5-15%) → không dùng làm bằng chứng; mục validation có bằng chứng thật thay vì để trống |
 | Workflow nhóm | Rà bảng before/after: sửa số bước thủ công 2-3 → 3, thống nhất định nghĩa metric "tổng công sức chuẩn bị context" | Workflow trước/sau và bảng impact nhất quán với nhau |
 | Problem Statement | Ghi lại phần phản biện PS v0 (baseline chưa đo, metric lệch định nghĩa, actor quá rộng) và đưa vào PS v1 | PS v1 thu hẹp actor, dùng metric chính "thời gian reviewer gom context 30 → ≤20 phút/PR" |
 | Rule / Workflow / Agent | Tổng hợp nội dung slide 5 vào bảng so sánh R/W/A và 5 câu hỏi chốt | Nhóm chốt Workflow, có Rule (PR template) làm nền |
@@ -43,9 +43,9 @@ Tôi là người tổng hợp bản báo cáo nhóm: gom bản của các thàn
 | Scan | Nhờ Claude đối chiếu 5 problems với yêu cầu đề bài, chỉ ra thông tin còn thiếu | Chỉ ra bảng scan thiếu số liệu; problem Internal link đang viết như task; Report tuần trùng ví dụ mẫu | Giả định cả 5 dự án đều có QC content (~6 giờ/tuần) | Sửa lại: chỉ 2 dự án có QC → ~150 phút/tuần; bổ sung số dự án book content, thời gian report, đơn vị "5 phút/10 trang" |
 | Problem Card | Nhờ AI trình bày top 3 thành Problem Card + workflow trước/sau | Giúp card đủ field, có fallback và human boundary | Tự chia thời gian từng bước; đề xuất pitch card QC content | Tôi chọn pitch card Lọc báo GP/PR vì đây là việc tôi trực tiếp làm và hiểu rõ nhất |
 | Workflow | Nhờ AI rà workflow nhóm và bảng before/after | Phát hiện số bước thủ công ghi "2-3" trong khi future workflow có 3 bước HUMAN; metric dùng 2 định nghĩa khác nhau | — | Thống nhất metric và sửa số bước theo workflow thật của nhóm |
-| Research | Nhờ AI tìm tài liệu về các tool AI review PR và kiểm tra con số trên slide | Tìm được tài liệu chính thức có link; chỉ ra CodeRabbit không đọc thread thảo luận của issue | Nhận định "chưa tool nào nối ticket" trên slide ban đầu chưa chính xác — CodeRabbit và PR-Agent đều đọc được ticket | Sửa khoảng trống thành phần "vì sao" (thread quyết định, PR/commit cũ, đánh dấu phần thiếu); bỏ các con số không có nguồn |
+| Research | Nhờ AI tìm tài liệu về các tool AI review PR, kiểm tra con số trên slide và tìm nghiên cứu đã công bố cho phần validation | Tìm được tài liệu chính thức có link; chỉ ra CodeRabbit không đọc thread thảo luận của issue; tìm được nghiên cứu Microsoft kết luận "hiểu thay đổi là khía cạnh then chốt của review" | Nhận định "chưa tool nào nối ticket" trên slide ban đầu chưa chính xác — CodeRabbit và PR-Agent đều đọc được ticket | Sửa khoảng trống thành phần "vì sao" (thread quyết định, PR/commit cũ, đánh dấu phần thiếu); bỏ các con số không có nguồn |
 | Problem Statement | Nhờ AI phản biện PS v0 | Chỉ ra baseline 40 phút và 3 lượt hỏi chưa có nguồn, actor gộp nhiều vai trò | — | Ghi rõ baseline cần đo trên 10 PR; thu hẹp actor ở PS v1 |
-| Rule / Workflow / Agent | Nhờ AI chuyển nội dung slide 5 của nhóm thành bảng so sánh và 5 câu hỏi chốt | Giải thích được vì sao bài rơi vào ô phức tạp cao/mơ hồ cao mà vẫn chọn Workflow | — | Giữ lựa chọn Workflow và điều kiện "thử PR template trước" theo slide nhóm |
+| Rule / Workflow / Agent | Nhờ AI chuyển nội dung slide 5 của nhóm thành bảng so sánh và 5 câu hỏi chốt | Giúp so sánh 3 mức trên cùng một bài và trả lời đủ 5 câu hỏi chốt | AI xếp bài vào ô mơ hồ cao / phức tạp cao, nên phải giải thích vòng vo vì sao vẫn chọn Workflow | Theo bản cuối của nhóm, xếp vào ô mơ hồ thấp / phức tạp cao vì bản tóm tắt trả lời 5 câu hỏi cố định và mỗi ý phải khớp nguồn — khớp trực tiếp với lựa chọn Workflow; giữ điều kiện "thử PR template trước" |
 | Decision | Nhờ AI tổng hợp các câu hỏi quyết định | Chỉ ra chưa thể Go vì chưa có số đo và chưa thử cách non-AI | — | Chốt Not Yet và đưa kế hoạch validate lên trước pilot |
 
 ---
@@ -72,9 +72,8 @@ thời gian đọc diff và chờ phản hồi giúp metric đo đúng bottlenec
 
 Nếu làm lại, tôi sẽ challenge nhóm mạnh hơn ở bước chấm điểm: lúc đầu bài review PR được
 chấm 5 điểm "pain có evidence" dù chưa phỏng vấn hay đo PR nào, đến khi rà lại báo cáo nhóm
-mới hạ xuống 3. Tôi sẽ đề nghị nhóm quan sát ít nhất
-2-3 phiên review thật trước khi chấm, để quyết định cuối không phải dừng ở Not Yet chỉ vì
-thiếu bằng chứng.
+mới hạ xuống 3. Tôi sẽ đề nghị nhóm quan sát ít nhất 2-3 phiên review thật trước khi
+chấm, để quyết định cuối không phải dừng ở Not Yet chỉ vì thiếu bằng chứng.
 ```
 
 ---
